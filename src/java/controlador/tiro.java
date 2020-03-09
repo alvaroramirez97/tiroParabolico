@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Coordenada;
 import modelo.Tiro;
 import modelo.Utilidades;
 
@@ -96,7 +97,9 @@ public class tiro extends HttpServlet {
         Tiro tiro = new Tiro(velocidad, angulo);
         
         ArrayList<String> angulos = Utilidades.getAngulos();
+        ArrayList<Coordenada> coors = Utilidades.generaCoordenadasCreadoPorMi(tiro.getAlcanceMaximo(), tiro.getVelocidadInicial(), angulo);
         request.setAttribute("angulos", angulos);
+        request.setAttribute("coordenadas", coors);
         request.setAttribute("tiro", tiro);
         request.setAttribute("velocidad", velocidad);
         request.setAttribute("angulo", angulo);

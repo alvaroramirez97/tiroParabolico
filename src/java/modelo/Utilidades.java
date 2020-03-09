@@ -1,6 +1,9 @@
 package modelo;
 
 
+import static java.lang.Math.cos;
+import static java.lang.Math.pow;
+import static java.lang.Math.tan;
 import java.util.ArrayList;
 
 /*
@@ -28,6 +31,20 @@ public class Utilidades {
      public static Double gradosAradianes(int grados){
          Double radianes = grados*Math.PI/180.0;
          return radianes;
+     }
+     
+     public static ArrayList<Coordenada> generaCoordenadasCreadoPorMi(double alcance, double vel_inicial, int angulo){
+         double intervalo = alcance/10;
+         double radianes = gradosAradianes(angulo);
+         ArrayList<Coordenada> lista = new ArrayList<Coordenada>();
+         for (int i = 0; i <= 10; i++){
+           
+           double x = i*intervalo;
+           double y = x * tan(radianes)-9.8 * pow(x,2)/(2*pow(vel_inicial,2) * pow(cos(radianes),2));
+           Coordenada coor = new Coordenada(x,y);
+           lista.add(coor);
+       }
+         return lista;
      }
     
 }

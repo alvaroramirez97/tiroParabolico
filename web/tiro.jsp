@@ -4,6 +4,8 @@
     Author     : DAW202
 --%>
 
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="modelo.Coordenada"%>
 <%@page import="modelo.Tiro"%>
 <%@page import="java.util.ArrayList"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -12,6 +14,11 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <style>
+            table{
+                width: 50%;
+            }
+        </style>
     </head>
     <body>
         <h1>Tiro Parabólico</h1>
@@ -27,7 +34,9 @@
         }else{
             velocidad_seleccionada = String.valueOf(request.getAttribute("velocidad"));
         }
-        ArrayList angulos = (ArrayList) request.getAttribute("angulos"); %>
+        ArrayList angulos = (ArrayList) request.getAttribute("angulos"); 
+        DecimalFormat df = new DecimalFormat("0.00");
+        %>
         
         <form action="tiro" method="post">
             <label for="velocidad">Velocidad(m/s)</label><input type="text" value="<%=velocidad_seleccionada%>" name="velocidad" id="velocidad">
@@ -51,8 +60,27 @@
             
             <% if ( request.getAttribute("tiro")!=null ) {
                 Tiro tiro = (Tiro) request.getAttribute("tiro");%>
-                    <h1>El alcance es: <%= tiro.getAlcanceMaximo() %></h1>
-                    <h1>La altura maxima es: <%= tiro.getAlturaMaxima()%></h1>
+                <h1>El alcance es: <%= df.format(tiro.getAlcanceMaximo()) %></h1>
+                <h1>La altura maxima(cm) es: <%= df.format(tiro.getAlturaMaxima()) %></h1>
+           <% }%>
+           
+           
+            <% if ( request.getAttribute("coordenadas")!=null ) {
+                ArrayList<Coordenada> coordenadas = (ArrayList<Coordenada>) request.getAttribute("coordenadas");%>
+                
+
+            <table border="1">
+               <tr><th>X</th><th>Y</th>
+                <% for (int i=0; i<coordenadas.size(); i++){
+                    Coordenada coor = coordenadas.get(i);  
+                %>
+               <tr>
+                   <td class="gris"><%= df.format(coor.getX()) %></td>
+                    <td class="gris"><%= df.format(coor.getY())  %></td>
+                </tr>
+             <% } %>
+            </table>
+                
            <% }%>
             
         </form>
