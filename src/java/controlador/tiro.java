@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import modelo.Tiro;
 import modelo.Utilidades;
 
 /**
@@ -78,7 +79,29 @@ public class tiro extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        int velocidad, angulo;
+        
+        if ( request.getParameter("velocidad")!="" ) {
+            velocidad = Integer.parseInt(request.getParameter("velocidad"));
+        } else {
+            velocidad=0;
+        }
+        if ( request.getParameter("angulo")!=null ) {
+            angulo = Integer.parseInt(request.getParameter("angulo"));
+        } else {
+            angulo = 10;
+        }
+        
+        Tiro tiro = new Tiro(velocidad, angulo);
+        
+        ArrayList<String> angulos = Utilidades.getAngulos();
+        request.setAttribute("angulos", angulos);
+        request.setAttribute("tiro", tiro);
+        request.setAttribute("velocidad", velocidad);
+        request.setAttribute("angulo", angulo);
+        request.getRequestDispatcher("tiro.jsp").forward(request, response);
+        
     }
 
     /**

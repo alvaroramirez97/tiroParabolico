@@ -18,7 +18,7 @@ public class Utilidades {
      public static ArrayList<String> getAngulos() {
          
        ArrayList<String> lista = new ArrayList<String>();
-       for (int i = 1; i <= 18; i++){
+       for (int i = 0; i <= 18; i++){
            int valor_mes = i*10;
            lista.add(String.valueOf(valor_mes));
        }
